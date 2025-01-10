@@ -1,0 +1,19 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - data:/data/db
+
+  app:
+    image: new-fitness-tracker:latest
+    container_name: social-media
+    ports:
+      - 5000:5000
+    env_file:
+      - .env.prod
+    depends_on:
+      - mongo
+
+volumes:
+  data:

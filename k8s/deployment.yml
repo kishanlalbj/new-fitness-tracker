@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ft-deployment
+  labels: 
+    tier: fullstack
+
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: ft-app
+      labels:
+        name: ft-app
+    spec:
+      containers:
+        - image: kishanlalbj/new-fitness-tracker
+          name: fitness-tracker
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
+  selector:
+    matchLabels:
+      name: ft-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ft-db
+spec:
+  selector:
+    matchLabels:
+      app: ft-db
+  template:
+    metadata:
+      labels:
+        app: ft-db
+    spec:
+      containers:
+      - name: ft-db
+        image: mongo
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 27017
+
+ 
+  
